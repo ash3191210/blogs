@@ -1,18 +1,20 @@
 const mongoose = require('mongoose')
 
 const commentschema = new mongoose.Schema({
-    commentOn:{
+    who:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
+    },
+    commentOn:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Blog',
     },
     body:{
         type:String,
         required:true,
         min:[1,'too few']
     },
-    date:{
-        type:Date
-    }
+   
 },{timestamps:true})
 
 const Comment = mongoose.model('Comment',commentschema);
