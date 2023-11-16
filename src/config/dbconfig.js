@@ -9,6 +9,4 @@ const connectDB = async(url)=>{
         console.log(er)
     }
 }
-module.exports ={
-    connectDB
-}
+module.exports=connectDB
