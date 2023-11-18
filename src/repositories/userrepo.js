@@ -6,11 +6,11 @@ class userrepo{
       try{
         const newuser = new User(user);
         const response = await newuser.save()
-        console.log("response  : ",response)
+        
      }
      catch(er){
         console.log("something wrong in user creation ")
-        throw (er.User)
+        throw (er)
      }
    }
 
@@ -36,22 +36,27 @@ class userrepo{
   }
  async updatepassword(name,pass){
         try{
-            const query={username:name}
-            const newpassword={password:pass}
-            const updateuser= await User.findOneAndUpdate(query,newpassword)
+          
+            const updateuser= await User.findOneAndUpdate({username:name},{$set:{password:pass}},{new:true})
+            //console.log("at repo layer : ",updateuser)
+            
+            return updateuser;
         }
         catch(er){
            console.log("something wrong in updating user ")
            console.error(er);
+           return false;
         }
  }
  async deleteuser(name){
     try{
         const updateuser= await User.findOneAndDelete({username:name})
+        return updateuser;
     }
     catch(er){
        console.log("something wrong in deleating user")
        console.error(er);
+       return false;
     }
  }
 

@@ -1,15 +1,18 @@
-const Blog = require('../models/blogmodel.js')
+const{ Blog} = require('../models/blogmodel.js')
 
 
 class blogrepo{
+ 
     async create(blog){
-      const newblog = new Blog(blog);
       try{
+         const newblog= new Blog(blog)
          await newblog.save()
+         return newblog;
       }
       catch(er){
          console.log("something wrong in blog creation ")
-         console.error(er);
+         throw er;
+
       }
     }
  
@@ -20,31 +23,37 @@ class blogrepo{
      }
      catch(er){
         console.log("something wrong in all blog getting ")
-        console.error(er);
+        throw er;
      }
    }
    async getblogsbytittle(tittle){
      try{
-         const blogs = await Blog({
-            tittle:{$regex:/tittle/,$options: 'i' }
+         const blogs = await Blog.find({
+            tittle:{$regex:'.*'+tittle+'.*',$options: 'i' }
          });
          return blogs;
      }
      catch(er){
         console.log("something wrong in getting the particular blogs by tittle ")
-        console.error(er);
+        throw er;
      }
    }
  
   async deleteblog(id){
      try{
-        await Blog.findByIdAndDelete(id)
+       const response= await Blog.findByIdAndDelete(id)
+       return response;
      }
      catch(er){
         console.log("something wrong in deleating blog")
-        console.error(er);
+        throw er;
      }
   }
+//   async updatecontent(id,newcontent){
+//     try{
+//        const response= await this.Blog.findOneAndUpdate
+//     }
+//   }
  
  }
- module.exports = blogrepo
+ module.exports = {blogrepo}

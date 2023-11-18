@@ -1,9 +1,13 @@
 const mongoose = require('mongoose')
 
 const blogschema = new mongoose.Schema({
-   title:{
+   tittle:{
      type:String,
      required:true,
+   },
+   content:{
+     type:String,
+     require:true
    },
    comment:{
      type:mongoose.Schema.Types.ObjectId,
@@ -23,4 +27,4 @@ const blogschema = new mongoose.Schema({
 },{timestamps:true})
 
 const Blog = mongoose.model('Blog',blogschema);
-module.exports = Blog
+module.exports = {Blog}
