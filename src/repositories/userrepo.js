@@ -48,6 +48,17 @@ class userrepo{
            return false;
         }
  }
+  async getuserbyid(id){
+    try{
+       const user= await User.findById(id).exec();
+       return  user;
+    }
+    catch(er){
+       console.log(er);
+       return er ;
+    }
+  }
+
  async deleteuser(name){
     try{
         const updateuser= await User.findOneAndDelete({username:name})

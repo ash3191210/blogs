@@ -2,15 +2,16 @@ const  mongoose =require('mongoose')
 
 const likeschema = new mongoose.Schema({
    
-    likedon:{
+    likedby:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'Blog'
+        ref:'User'
     },
+    
     count:{
         type:Number,
         default:0
     }
-})
+},{timestamps:true})
 
 const Like = mongoose.model('Like',likeschema);
 module.exports = Like;

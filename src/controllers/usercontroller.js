@@ -14,6 +14,12 @@ class usercontroller{
       this.getalluser=this.getalluser.bind(this)
       this.getuser=this.getuser.bind(this)
     }
+    async redgisterpage(req,res){
+       res.render('register')
+    }
+    async loginpage(req,res){
+       res.render('login')
+    }
    async createuser(req,res){
        const user={
          username: req.body.username,
@@ -44,7 +50,7 @@ class usercontroller{
          "success": "false"
       })
    }
-
+ 
    async deleateuser(req,res){
        const username=req.body.username;
 
@@ -57,10 +63,9 @@ class usercontroller{
          "success": "false"
       })
    }
-
+   
    async getalluser(req,res){
        const response = await this.userser.getalluser();
-       console.log(response)
        res.json({
          "success":"true"
        })
@@ -74,6 +79,7 @@ class usercontroller{
         "success":"true"
       })
    }
+
 }
 
 module.exports = usercontroller

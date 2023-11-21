@@ -30,6 +30,10 @@ class userservices{
      const user=await this.newuserrepo.getuser(name);
      return user;
   }
+  async getuserbyid(id){
+    const user = await this.newuserrepo.getuserbyid(id);
+    return user;
+  }
   async updatepassword(name,newpassword){
      const response = await this.newuserrepo.updatepassword(name,newpassword);
      return response;

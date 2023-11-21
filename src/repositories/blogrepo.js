@@ -30,7 +30,7 @@ class blogrepo{
      try{
          const blogs = await Blog.find({
             tittle:{$regex:'.*'+tittle+'.*',$options: 'i' }
-         });
+         }).exec();
          return blogs;
      }
      catch(er){
