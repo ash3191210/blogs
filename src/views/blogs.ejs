@@ -10,6 +10,9 @@
   body{
      background-color: rgb(28, 27, 27);
   }
+  .pspan{
+    display: none;
+  }
    .myclass{
        width: 50rem ;
        margin-bottom: 5px;
@@ -35,34 +38,74 @@
     padding-right: 10px;
     padding-bottom: 2px;
    }
-  
+  #mtbtn{
+    background-color: rgb(16, 15, 15);
+    color: rgb(165, 164, 164);
+    margin-top: 8px;
+    border: none;
+    border-radius: 5px;
+    
+  }
+
+  .cmt{
+    margin-top: 8px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(234, 231, 237);
+    box-shadow: 2px 5px 5px rgb(61, 61, 61);
+    height: 90px;
+  }
+  .edit{
+    color: white;
+    font-size: 12px;
+     border: none;
+     background-color: black;
+     box-shadow: 1px 1px 2px rgb(49, 48, 49);
+     size: 10px;
+     margin-left: 9px;
+     border-radius: 4px;
+    
+  }
+  .del{
+    color: white;
+    font-size: 12px;
+     border: none;
+     box-shadow: 1px 1px 2px rgb(49, 48, 49);
+     background-color: black;
+     size: 10px;
+     padding-left: 8px;
+     padding-right: 8px;
+     border-radius: 4px;
+
+  }
 </style>
 <body>
     <h1 style="color: white; text-align: center;">WELCOME <%=username%> !!</h1>
+    <form action="/blogs">
+      <input type="text" name="search" id="" placeholder="search">
+      <button type="submit">search</button>
+    </form>
     <h3  style="color: white; margin-left: 20px;">try this blogs</h3>
-    <% 
-      blogs.forEach((blog)=>{%>
-        <div class="card myclass"  >
-           <div class="card-body">
-            <h5 class="card-title"><%=blog._doc.tittle%></h5>
-            <h6 class="card-subtitle mb-2 text-muted">posted by @<%=blog.modauthor%></h6>
-            <p class="card-text"><%= blog._doc.content%></p>
-
-            <div>
-               <form action="/comment?id=<%=blog._doc.id%>&author=<%=blog.modauthor%>" method="post">
-             <input  class="comment"  type="text" name="comment" id="" placeholder="comment"> 
-             <input class="submit" type="submit" name="post" value="post" id=""> 
-            </form>
-              </div>
- 
-          <a href="#" class="card-link">Another link</a>
-            </div>
-      </div>
-     <% })
-    %>
-
-   
+      <a style="color: white;" href="/create/blog"> create a blog</a>
+     <% 
+     blogs.forEach((blog)=>{%>
+           
+        <div class="card">
+          <h5><%=blog.newfield.username%></h5>
+         <h6 style="color: rgb(84, 84, 84);">tittle: <%=blog.tittle%></h6>
+        <p><%=(blog.content).substr(0,12)+"....."%> </p>
+        <a href="/blog/<%=blog._id%>" style="margin-bottom:10px;">read more</a>
         
+          </div>
+
+     <%})%>
+   <a style="color: white;" href="?page=<%=pageinfo.prevpage%>&search=<%=pageinfo.search%>">prev </a>
+     <%
+     for(let i=1;i<=pageinfo.totalpage;i++){%>
+       <a style="color: white;" href="?page=<%=i%>&search=<%=pageinfo.search%>"><%=i%></a> 
+
+     <%} %>
+     <a style="color: white;" href="?page=<%=pageinfo.nextpage%>&search=<%=pageinfo.search%>">next</a>
         
 
 

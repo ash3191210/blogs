@@ -1,4 +1,7 @@
+const { JWT_SECRET } = require('../config/envconfig.js');
 const {userrepo}=require('../repositories/index.js')
+const jwt = require('jsonwebtoken')
+
 
 class userservices{
     
@@ -37,6 +40,15 @@ class userservices{
   async updatepassword(name,newpassword){
      const response = await this.newuserrepo.updatepassword(name,newpassword);
      return response;
+  }
+
+   createtoken(user_id,username){
+     const token = jwt.sign({id:user_id,username},JWT_SECRET,{expiresIn:'1d'})
+     return token
+  }
+   validatetoken(token){
+    const response = jwt.verify(token,JWT_SECRET)
+    return response;
   }
 }
 

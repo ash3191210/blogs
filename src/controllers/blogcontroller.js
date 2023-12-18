@@ -1,30 +1,35 @@
 const { blogservices } = require("../services/blogservices.js");
+const { commentservice } = require("../services/comment-ser.js");
 const { userservices } = require("../services/userservices.js");
+const jwt = require('jsonwebtoken')
 
 
 class blogcontroller{
      constructor(){
         this.blogservices=new blogservices();
         this.userservices=new userservices();
+        this.commentservice = new commentservice();
+
         this.create = this.create.bind(this);
         this.getblogbytittle =this.getblogbytittle.bind(this);
         this.getallblogs=this.getallblogs.bind(this)
+        this.getblogbyid=this.getblogbyid.bind(this)
 
      }
-
+     async  createblogpage(req,res){
+         res.render('create_blogs',{username:req.user.username})
+     }
      async create(req,res){
-        const username=req.body.username;
-
+      
         const blog={
             tittle:req.body.tittle,
+            topic:req.body.topic,
+            author:req.user.id,
             content:req.body.content
         }
         try{
-            const response = await this.blogservices.createblog(username,blog)
-            res.json({
-                sucess:true,
-                message:"great"
-            })
+            const response = await this.blogservices.createblog(blog)
+           res.redirect('/create/blog')
         }catch(er){
             console.error("error : ",er)
             res.json({
@@ -36,15 +41,25 @@ class blogcontroller{
 
      async getallblogs(req,res){
         try{
-            let response = await this.blogservices.getallblogs()
-             var blogs=[]
-            for(let i=0;i<response.length;i++){
-                const username=await this.userservices.getuserbyid(response[i].author)
-                const temp={...response[i],modauthor:username.username}
-                blogs.push(temp);
-            }
-          console.log("blogs : ",blogs)
-            res.render("blogs",{username:req.user.username,blogs:blogs})
+           let limit=3;
+           let page =1,search='';
+           if(req.query.search) search=req.query.search
+           if(req.query.page) page=Number(req.query.page);
+           
+           const carry = await this.blogservices.getpaginatedblog(limit,page,search)
+           const blogs=carry.response
+           const temp=carry.totalpage
+           const totalpage = Math.ceil(temp/limit);
+
+           const pageinfo={
+             totalpage,
+             search,
+             nextpage:Math.min(totalpage,page+1),
+             prevpage:Math.max(page-1,1)
+           }
+        //    console.log("info : ",page-(-1))
+        
+            res.render("blogs",{username:req.user.username,blogs:blogs,pageinfo:pageinfo})
         } catch(er){
             console.error("error : ",er)
             res.json({
@@ -69,6 +84,28 @@ class blogcontroller{
                 success:false,
                 message:er
              })
+        }
+     }
+
+     async getblogbyid(req,res){
+        try {
+           const blogid= req.params.id;
+           //console.log("blog id : ",blogid);
+           const user = req.user.username;
+
+           const response= await this.blogservices.getblogbyid(blogid);
+           const blogs={
+             username:req.user.username,
+             blog:response
+           }
+           res.render('blogbyid',{blogs:blogs})
+
+
+            
+        } catch (error) {
+             console.error("somedthing wrong in getblogbyid in blogcontroller");
+             throw(error)
+
         }
      }
 }

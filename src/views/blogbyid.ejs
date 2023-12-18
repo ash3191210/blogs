@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style> 
+ </style>
+<body>
+    <h2 style="text-align: center;">@<%=blogs.username%></h2><br>
+
+    <div class="card">
+        
+       <h5 style="color: rgb(84, 84, 84);">tittle: <%=blogs.blog.tittle%></h6>
+       <h6> author : <%=blogs.blog.author.username%></h6>
+      <p><%=(blogs.blog.content)%> </p><br>
+      
+      <form action="/comment?id=<%=blogs.blog._id%>" method="post">
+        <input type="text" name="comment">
+        <button type="submit">post comment</button>
+    </form>
+
+       <h5>commnets </h5>
+        <% 
+        (blogs.blog.comment).forEach((ele)=>{ %>
+          <p><%=ele.body%> <footer><h6>by @<%=ele.who.username%></h6></footer></p>
+
+        <%})
+        
+        %>
+        </div>
+
+</body>
+</html>

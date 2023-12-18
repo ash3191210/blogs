@@ -5,14 +5,18 @@ const blogschema = new mongoose.Schema({
      type:String,
      required:true,
    },
+   topic:{
+     type:String,
+     require:true
+   },
    content:{
      type:String,
      require:true
    },
-   comment:{
+   comment:[{
      type:mongoose.Schema.Types.ObjectId,
      ref: 'Comment'
-   },
+   }],
    date:{
       type:Date
    },
