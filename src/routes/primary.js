@@ -19,7 +19,7 @@ this.blogcontroller=new blogcontroller();
 this.commentmiddleware =new commentmiddleware();
 this.commentcontroller = new commentcontroller();
 
-// this.blogrepo.getblogbyauthor('aniket')
+ //this.blogrepo.getblogbyauthor('beta')
 
 
 router.get('/',this.usercont.redgisterpage)
@@ -32,6 +32,7 @@ router.get("/blogs",validateuser,this.blogcontroller.getallblogs)
  router.get('/create/blog',validateuser,this.blogcontroller.createblogpage)
  router.post('/create/blog',validateuser,this.blogcontroller.create)
  router.get('/blog/:id',validateuser,this.blogcontroller.getblogbyid)
+ router.get('/blog/user/:username',validateuser,this.blogcontroller.getblogbyauthor)
 // router.get('/blog/tittle',this.blogcontroller.getblogbytittle)
  
 

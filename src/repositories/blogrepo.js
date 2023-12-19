@@ -132,7 +132,7 @@ async getblogbyauthor(author){
             {$project:{'username':1}}
          ]
       }},
-      {$unwind:'$user_info'} 
+      {$unwind:{path:'$user_info',preserveNullAndEmptyArrays:true}}
       ,
       {
          $lookup:{
@@ -145,7 +145,8 @@ async getblogbyauthor(author){
             ]
          }
       }
-       ,{$unwind:{path:'$comment_info',preserveNullAndEmptyArrays:true}},
+       ,{$unwind:{path:'$comment_info',preserveNullAndEmptyArrays:true}}
+      ,
       {
          $lookup:{
             from:'users',
@@ -157,13 +158,28 @@ async getblogbyauthor(author){
             ]
          } 
       }
-       ,{$unwind:{path:'$who',preserveNullAndEmptyArrays:true}},
+       ,{$unwind:{path:'$who',preserveNullAndEmptyArrays:true}}
+       ,
        {$project:{comment:0,author:0}},
        {$match:{
          $expr:{
-            $eq:['$user_info.username','alpha']
+            $eq:['$user_info.username',author]
          }
-       }}
+       }},
+      {
+         $group:{
+            _id:'$_id',comment:{$push:{'comment_info':'$comment_info','who':'$who'}},
+            tittle:{$addToSet:'$tittle'},author_info:{$addToSet:'$user_info'},
+            content:{$addToSet:'$content'},
+         }
+         
+      },{
+         $unwind:'$tittle'
+      },{
+         $unwind:'$content'
+      },{
+         $unwind:'$author_info'
+      }
 
      ])
       return aggregate;

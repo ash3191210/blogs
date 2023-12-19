@@ -7,8 +7,20 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
-    <h1 style="text-align: center;">WELCOME @<%=username%> to your blogs</h1><br>
-
+    <h1 style="text-align: center;">WELCOME @<%=blogs.username%> to your blogs</h1><br>
+     
+     <% 
+       blogs.blog.forEach((ele)=>{%>
+        <div class="card" style="width: 18rem; ">
+        <div class="card-body">
+          <h5 class="card-title">tittle: <%=ele.tittle%></h5>
+          <p class="card-text"><%=(ele.content).substr(0,12)+"....."%></p>
+          <a href="/blog/<%=ele._id%>" class="card-link">Read More</a>
+          <a href="#" class="card-link">Another link</a>
+        </div>
+       </div>
+      <% })
+      %>
     
     
 </body>

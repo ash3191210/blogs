@@ -112,7 +112,7 @@ class blogcontroller{
     
      async getblogbyauthor(req,res){
        try {
-          const author = req.params.author;
+          const author = req.params.username;
           const response = await this.blogservices.getblogbyauthor(author)
 
           const blogs={
