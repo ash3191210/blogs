@@ -85,5 +85,15 @@ const { userservices } = require('./userservices.js');
             throw er
         }
     }
+    async getblogbyauthor(author){
+        try {
+            const response = await this.blogrepo.getblogbyauthor(author)
+            return response;
+
+        } catch (error) {
+            console.error("something wrong in blogservices"+error);
+            throw(error)
+        }
+    }
  }
  module.exports ={blogservices}

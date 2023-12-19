@@ -13,7 +13,6 @@ class commentcontroller{
     async comment(req,res){
        try{
     
-        
         const comment ={
             body: req.body.comment,
             who: req.user.id,

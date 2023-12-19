@@ -7,7 +7,8 @@ const { commentmiddleware } = require('../middlewares/comment-middleware.js');
 const cookieparser = require('cookie-parser');
 const {validateuser} = require('../middlewares/validate-middle.js');
 const { commentcontroller } = require('../controllers/comment-controller.js');
-
+const { blogrepo } = require('../repositories/blogrepo.js');
+this.blogrepo = new blogrepo()
 
 
 
@@ -18,9 +19,10 @@ this.blogcontroller=new blogcontroller();
 this.commentmiddleware =new commentmiddleware();
 this.commentcontroller = new commentcontroller();
 
+// this.blogrepo.getblogbyauthor('aniket')
+
 
 router.get('/',this.usercont.redgisterpage)
-
 router.get('/login',this.usercont.loginpage)
 router.post('/login',this.usercont.login)
 router.get('/all',this.usercont.getalluser)

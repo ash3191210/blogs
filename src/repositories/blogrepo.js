@@ -117,6 +117,64 @@ class blogrepo{
        throw(error)
     }
   }
+
+async getblogbyauthor(author){
+   try {
+      
+     const aggregate =await Blog.aggregate([
+      
+      {$lookup:{
+         from:'users',
+         foreignField:'_id',
+         localField:'author',
+         as:'user_info',
+         pipeline:[
+            {$project:{'username':1}}
+         ]
+      }},
+      {$unwind:'$user_info'} 
+      ,
+      {
+         $lookup:{
+            from:'comments',
+            localField:'comment',
+            foreignField:'_id',
+            as:'comment_info',
+            pipeline:[
+               {$project:{"commentOn":0}}
+            ]
+         }
+      }
+       ,{$unwind:{path:'$comment_info',preserveNullAndEmptyArrays:true}},
+      {
+         $lookup:{
+            from:'users',
+            localField:'comment_info.who',
+            foreignField:'_id',
+            as:'who',
+            pipeline:[
+               {$project:{username:1}}
+            ]
+         } 
+      }
+       ,{$unwind:{path:'$who',preserveNullAndEmptyArrays:true}},
+       {$project:{comment:0,author:0}},
+       {$match:{
+         $expr:{
+            $eq:['$user_info.username','alpha']
+         }
+       }}
+
+     ])
+      return aggregate;
+      
+   } catch (error) {
+      console.error('something wrong in blogrepo'+error);
+      throw(error)
+   }
+}
+
+
 //   async updatecontent(id,newcontent){
 //     try{
 //        const response= await this.Blog.findOneAndUpdate

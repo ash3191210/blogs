@@ -14,6 +14,7 @@ class blogcontroller{
         this.getblogbytittle =this.getblogbytittle.bind(this);
         this.getallblogs=this.getallblogs.bind(this)
         this.getblogbyid=this.getblogbyid.bind(this)
+        this.getblogbyauthor=this.getblogbyauthor.bind(this)
 
      }
      async  createblogpage(req,res){
@@ -108,6 +109,24 @@ class blogcontroller{
 
         }
      }
+    
+     async getblogbyauthor(req,res){
+       try {
+          const author = req.params.author;
+          const response = await this.blogservices.getblogbyauthor(author)
+
+          const blogs={
+            username: req.user.username,
+            blog:response
+          }
+         res.render('yourblogs',{blogs:blogs})
+
+       } catch (error) {
+          console.error("something wrong in blogcontroller"+error)
+          throw(error)
+       }
+     }
+
 }
 module.exports ={
     blogcontroller
