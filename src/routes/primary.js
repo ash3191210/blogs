@@ -33,6 +33,8 @@ router.get("/blogs",validateuser,this.blogcontroller.getallblogs)
  router.post('/create/blog',validateuser,this.blogcontroller.create)
  router.get('/blog/:id',validateuser,this.blogcontroller.getblogbyid)
  router.get('/blog/user/:username',validateuser,this.blogcontroller.getblogbyauthor)
+ router.get('/blog/edit/:id',validateuser,this.blogcontroller.blogedit)
+ router.post('/blog/edit/:id',validateuser,this.blogcontroller.editblogbyid)
 // router.get('/blog/tittle',this.blogcontroller.getblogbytittle)
  
 

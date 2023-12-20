@@ -190,12 +190,18 @@ async getblogbyauthor(author){
    }
 }
 
-
-//   async updatecontent(id,newcontent){
-//     try{
-//        const response= await this.Blog.findOneAndUpdate
-//     }
-//   }
+ async editblogbyid(id,update){
+     try {
+         const response = await Blog.findByIdAndUpdate(id,update,{
+            new:true
+         });
+         return response;
+          
+     } catch (error) {
+        console.error("something wrong in blogrepo",error);
+        throw(error)
+     }
+ }
  
  }
  module.exports = {blogrepo}

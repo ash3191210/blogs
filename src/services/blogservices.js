@@ -95,5 +95,16 @@ const { userservices } = require('./userservices.js');
             throw(error)
         }
     }
+    async editblogbyid(id,update){
+        try {
+            
+            const response = await this.blogrepo.editblogbyid(id,update);
+            return response;
+
+        } catch (error) {
+              console.error('something wrong in blogservices'+error);
+              throw(error)
+        }
+    }
  }
  module.exports ={blogservices}

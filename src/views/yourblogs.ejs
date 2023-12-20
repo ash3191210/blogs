@@ -16,7 +16,7 @@
           <h5 class="card-title">tittle: <%=ele.tittle%></h5>
           <p class="card-text"><%=(ele.content).substr(0,12)+"....."%></p>
           <a href="/blog/<%=ele._id%>" class="card-link">Read More</a>
-          <a href="#" class="card-link">Another link</a>
+          <a href="/blog/edit/<%=ele._id%>" class="card-link">Edit Blog</a>
         </div>
        </div>
       <% })

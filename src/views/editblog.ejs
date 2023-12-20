@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 style="text-align: center;"> @<%=blogs.username%> edit your blog</h1>
+    <form action="/blog/edit/<%=blogs.blog._id%>" style="text-align: center;" method="post">
+       
+      tittle: <input type="text" name="tittle" value="<%=blogs.blog.tittle%>"><br>
+      topic: <input type="text" name="topic" value="<%=blogs.blog.topic%>"><br>
+      content: <input type="text" name="content" value="<%=blogs.blog.content%>"><br>
+      <button type="submit">save</button>
+
+    </form>
+    
+</body>
+</html>

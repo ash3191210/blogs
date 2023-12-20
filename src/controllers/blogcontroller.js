@@ -1,7 +1,9 @@
+const { json } = require("body-parser");
 const { blogservices } = require("../services/blogservices.js");
 const { commentservice } = require("../services/comment-ser.js");
 const { userservices } = require("../services/userservices.js");
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const { default: mongoose } = require("mongoose");
 
 
 class blogcontroller{
@@ -14,7 +16,9 @@ class blogcontroller{
         this.getblogbytittle =this.getblogbytittle.bind(this);
         this.getallblogs=this.getallblogs.bind(this)
         this.getblogbyid=this.getblogbyid.bind(this)
-        this.getblogbyauthor=this.getblogbyauthor.bind(this)
+        this.getblogbyauthor=this.getblogbyauthor.bind(this);
+        this.blogedit=this.blogedit.bind(this);
+        this.editblogbyid=this.editblogbyid.bind(this);
 
      }
      async  createblogpage(req,res){
@@ -126,8 +130,41 @@ class blogcontroller{
           throw(error)
        }
      }
+     async blogedit(req,res){
+        try {
+           const response = await this.blogservices.getblogbyid(req.params.id);
+           const blogs={
+             username:req.user.username,
+             blog:response
 
-}
+           }
+           //console.log("response",response);
+           res.render('editblog',{blogs:blogs});
+
+        } catch (error) {
+           console.error("something wrong in blogcontroller"+error);
+           throw(error)
+        }
+     }
+     async editblogbyid(req,res){
+       try {
+         const update={
+            tittle: req.body.tittle,
+            topic: req.body.topic,
+            content: req.body.content
+         }
+         const bid= new mongoose.Types.ObjectId(req.params.id)
+         const response = await this.blogservices.editblogbyid(bid,update);
+         return res.redirect('/blog/user/'+req.user.username)
+   
+       } catch (error) {
+          console.error("something wrong in blogcontroller ",error);
+          throw(error)
+       }
+     
+
+}}
+
 module.exports ={
     blogcontroller
 }
