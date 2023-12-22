@@ -4,15 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        #content{
+            margin-top: 10px;
+            margin-left: 200px;
+            width: 1000px;
+            height: 300px;
+            border: 2px solid rgb(68, 67, 67);
+            border-radius: 12px;
+            box-shadow: 1px 1px 15px black;
+           
+        }
+    </style>
+    <!-- Place the first <script> tag in your HTML's <head> -->
+<script src="https://cdn.tiny.cloud/1/irixa6x2r8iaknve1pblun46620vshkfruboxg49fpnta9ia/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+
+<!-- Place the following <script> and <textarea> tags your HTML's <body> -->
+
+
+
+
+
+
+
 </head>
 <body>
+    <script>
+        tinymce.init({
+          selector: 'textarea',
+          height:300,
+          width:1000,
+          resize:'both',
+          plugins: 'ai tinycomments mentions anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed permanentpen footnotes advtemplate advtable advcode editimage tableofcontents mergetags powerpaste tinymcespellchecker autocorrect a11ychecker typography inlinecss',
+          toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | align lineheight | tinycomments | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+          tinycomments_mode: 'embedded',
+          tinycomments_author: 'Author name',
+          mergetags_list: [
+            { value: 'First.Name', title: 'First Name' },
+            { value: 'Email', title: 'Email' },
+          ],
+          ai_request: (request, respondWith) => respondWith.string(() => Promise.reject("See docs to implement AI Assistant")),
+        });
+      </script>
+
+
     <h1 style="text-align: center;">@<%=username%> create your blog!!</h1>
     <div style="text-align: center;">
         <form action="/create/blog" method="post">
             <input type="text" name="tittle" id="" placeholder="tittle" required><br>
             <input type="text" name="topic" id="" placeholder="topic" required><br>
-            <input type="text" name="content" id="" placeholder="content" required><br>
-            <input type="submit" name="" id="">
+            
+            <div id="content">
+                    <textarea   name="content"  required placeholder="type your content..."></textarea><br>
+            </div>
+        
+               
+            <button type="submit"  onclick="tinyMCE.triggerSave()" >Submit</button>
+           
         </form>
     </div>
 </body>

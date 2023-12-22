@@ -106,5 +106,14 @@ const { userservices } = require('./userservices.js');
               throw(error)
         }
     }
+    async deleteblogbyid(id){
+         try {
+            const response = await this.blogrepo.deleteblogbyid(id);
+            return response;
+         } catch (error) {
+            console.error('something wrong in blogservices'+error);
+              throw(error)
+         }
+    }
  }
  module.exports ={blogservices}

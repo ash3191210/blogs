@@ -50,6 +50,17 @@ class userservices{
     const response = jwt.verify(token,JWT_SECRET)
     return response;
   }
+
+  async uploadprofilepic(username,url,pid){
+    try {
+      const response = await this.newuserrepo.uploadprofilepic(username,url,pid);
+      return response;
+      
+    } catch (error) {
+       console.error("something wrong in userservices ",error);
+       throw(error)
+    }
+  }
 }
 
 

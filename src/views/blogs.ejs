@@ -78,9 +78,35 @@
      border-radius: 4px;
 
   }
+  .myclass{
+    height: 80px;
+    width: 80px;
+    border: 4px solid rgba(0,0,0);
+    border-radius: 50%;
+    box-shadow: 0.1px 1px 7px white;
+    
+  }
+  
 </style>
 <body>
     <h1 style="color: white; text-align: center;">WELCOME <%=username%> !!</h1>
+    <div class="text-center">
+      <img src="<%=imgurl%>" class="circle myclass" alt="...">
+    </div>
+    <form action="/user/profile_pic/<%=username%>" method="post" enctype="multipart/form-data">
+       <input style="color: white; border: 2px solid white; margin-bottom: 10px;" type="file" name="profile_pic" > <button>upload</button>
+    </form>
+
+        
+        <% if(imgurl!="https://qph.cf2.quoracdn.net/main-qimg-2b21b9dd05c757fe30231fac65b504dd"){%>
+
+           <a href="/user/profile_pic/del">Delete profile picture</a>
+
+   <% } %> <br><br>
+
+
+
+
     <form action="/blogs">
       <input type="text" name="search" id="" placeholder="search">
       <button type="submit">search</button>
@@ -94,10 +120,19 @@
         <div class="card">
           <h5><%=blog.newfield.username%></h5>
          <h6 style="color: rgb(84, 84, 84);">tittle: <%=blog.tittle%></h6>
-        <p><%=(blog.content).substr(0,12)+"....."%> </p>
+        
+         <%
+         if(!blog.preview){%>
+          <p><%-(blog.content)%></p>
+          
+        <% } else{%>
+          <p><%-(blog.preview)+"....."%> </p>
+        <% }
+         %>
+
         <a href="/blog/<%=blog._id%>" style="margin-bottom:10px;">read more</a>
         
-          </div>
+        </div>
 
      <%})%>
    <a style="color: white;" href="?page=<%=pageinfo.prevpage%>&search=<%=pageinfo.search%>">prev </a>

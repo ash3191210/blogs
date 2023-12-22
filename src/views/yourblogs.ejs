@@ -14,14 +14,17 @@
         <div class="card" style="width: 18rem; ">
         <div class="card-body">
           <h5 class="card-title">tittle: <%=ele.tittle%></h5>
-          <p class="card-text"><%=(ele.content).substr(0,12)+"....."%></p>
+          <h5 class="card-title">topic: <%=ele.topic%></h5>
+          <p class="card-text"><%-(ele.preview)+"....."%></p>
           <a href="/blog/<%=ele._id%>" class="card-link">Read More</a>
-          <a href="/blog/edit/<%=ele._id%>" class="card-link">Edit Blog</a>
+          <a href="/blog/edit/<%=ele._id%>" class="card-link">Edit Blog</a><br>
+          <a href="/blog/del/<%=ele._id%>" class="card-link">Delete Blog</a>
+          
         </div>
        </div>
       <% })
       %>
-    
-    
+      
+     
 </body>
 </html>

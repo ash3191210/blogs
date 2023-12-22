@@ -19,23 +19,25 @@ class blogcontroller{
         this.getblogbyauthor=this.getblogbyauthor.bind(this);
         this.blogedit=this.blogedit.bind(this);
         this.editblogbyid=this.editblogbyid.bind(this);
+        this.deleteblogbyid=this.deleteblogbyid.bind(this);
 
      }
      async  createblogpage(req,res){
          res.render('create_blogs',{username:req.user.username})
      }
      async create(req,res){
-      
-        const blog={
+        
+        try{
+         const blog={
             tittle:req.body.tittle,
             topic:req.body.topic,
             author:req.user.id,
             content:req.body.content
         }
-        try{
-            const response = await this.blogservices.createblog(blog)
-           res.redirect('/create/blog')
-        }catch(er){
+        const response = await this.blogservices.createblog(blog)
+        res.redirect('/create/blog')
+        }
+        catch(er){
             console.error("error : ",er)
             res.json({
                 success:false,
@@ -63,9 +65,15 @@ class blogcontroller{
              prevpage:Math.max(page-1,1)
            }
         //    console.log("info : ",page-(-1))
+         
+            const userinfo=await this.userservices.getuser(req.user.username);
+            const imgurl=userinfo.image;
+
+            res.render("blogs",{username:req.user.username,imgurl,blogs:blogs,pageinfo:pageinfo})
+        } 
         
-            res.render("blogs",{username:req.user.username,blogs:blogs,pageinfo:pageinfo})
-        } catch(er){
+        
+        catch(er){
             console.error("error : ",er)
             res.json({
                 success:false,
@@ -163,7 +171,20 @@ class blogcontroller{
        }
      
 
-}}
+}
+  async deleteblogbyid(req,res){
+     try {
+        const blogid = new mongoose.Types.ObjectId(req.params.id)
+        const response=await this.blogservices.deleteblogbyid(blogid);
+        return res.redirect('/blog/user/'+req.user.username)
+     } catch (error) {
+        console.error("something wrong in blog conrtoller",error);
+        throw(error)
+     }
+  }
+
+
+}
 
 module.exports ={
     blogcontroller

@@ -70,6 +70,16 @@ class userrepo{
        return false;
     }
  }
+ async uploadprofilepic(username,url,pid){
+    try {
+       const response = await User.findOneAndUpdate({username},{image:url,image_public_id:pid},{new:true,upsert:true})
+       return response;
+
+    } catch (error) {
+      console.error("something wrong in userrepo ",error);
+      throw(error)
+    }
+ }
 
 }
 module.exports = userrepo

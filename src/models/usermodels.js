@@ -10,6 +10,14 @@ const userschema= new mongoose.Schema({
         type:String,
         required:true,
     },
+    image:{
+        type:String,
+        default:"https://qph.cf2.quoracdn.net/main-qimg-2b21b9dd05c757fe30231fac65b504dd"
+    },
+    image_public_id:{
+        type:String,
+        default:null
+    },
     email:{
         type:String,
     },

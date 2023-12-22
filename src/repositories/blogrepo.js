@@ -202,6 +202,16 @@ async getblogbyauthor(author){
         throw(error)
      }
  }
+ async deleteblogbyid(id){
+   try {
+     const response = await Blog.findByIdAndDelete(id,{new:true})
+     return response;
+       
+  } catch (error) {
+     console.error("something wrong in blogrepo",error);
+     throw(error)
+  }
+ }
  
  }
  module.exports = {blogrepo}
