@@ -170,7 +170,7 @@ async getblogbyauthor(author){
          $group:{
             _id:'$_id',comment:{$push:{'comment_info':'$comment_info','who':'$who'}},
             tittle:{$addToSet:'$tittle'},author_info:{$addToSet:'$user_info'},
-            content:{$addToSet:'$content'},
+            content:{$addToSet:'$content'},preview:{$addToSet:'$preview'}
          }
          
       },{
@@ -179,6 +179,8 @@ async getblogbyauthor(author){
          $unwind:'$content'
       },{
          $unwind:'$author_info'
+      },{
+         $unwind:'$preview'
       }
 
      ])
